@@ -61,6 +61,8 @@ const AddItem = () => {
       <div className="w-full max-w-3xl bg-white shadow-xl rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Add item to collection</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* ITEM NAME */}
           <div>
             <label className="block text-gray-700 font-semibold">Item Name:</label>
             <input
@@ -73,6 +75,7 @@ const AddItem = () => {
             />
           </div>
 
+          {/* MAIN IAMGE  */}
           <div>
             <label className="block text-gray-700 font-semibold">Main Image:</label>
             <input
@@ -85,6 +88,7 @@ const AddItem = () => {
             />
           </div>
 
+          {/* DESCRIPTION */}
           <div>
             <label className="block text-gray-700 font-semibold">Description:</label>
             <textarea
@@ -96,6 +100,7 @@ const AddItem = () => {
             />
           </div>
 
+          {/* CONDITION */}
           <div>
             <label className="block text-gray-700 font-semibold">Condition Type:</label>
             <select
@@ -109,9 +114,10 @@ const AddItem = () => {
             </select>
           </div>
 
+          {/* choosing condition type */}
           {conditionType === "conservation" && (
             <div>
-              <label className="block text-gray-700 font-semibold">Choose status:</label>
+              <label className="block text-gray-700 font-semibold">Choose Type:</label>
               <select
                 value={conditionValue}
                 onChange={(e) => setConditionValue(e.target.value)}
@@ -130,9 +136,10 @@ const AddItem = () => {
             </div>
           )}
 
+          {/* customing condition type */}
           {conditionType === "other" && (
             <div>
-              <label className="block text-gray-700 font-semibold">Custom Value:</label>
+              <label className="block text-gray-700 font-semibold">Custom Type:</label>
               <input
                 type="text"
                 value={conditionValue}
@@ -142,11 +149,14 @@ const AddItem = () => {
               />
             </div>
           )}
-
+          
+          {/* ADDITIONAL INFO */}
           <div>
             <label className="block text-gray-700 font-semibold">Additional Information:</label>
             {additionalInformation.map((info, index) => (
               <div key={index} className="bg-gray-50 p-4 rounded-lg border-2 border-gray-400 shadow-sm mb-4">
+                
+                {/* TITLE */}
                 <input
                   type="text"
                   value={info.title}
@@ -155,6 +165,8 @@ const AddItem = () => {
                   required
                   className="w-full p-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-white mb-2"
                 />
+
+                {/* TEXT */}
                 <textarea
                   value={info.text}
                   onChange={(e) => handleInfoChange(index, "text", e)}
@@ -162,6 +174,8 @@ const AddItem = () => {
                   required
                   className="w-full p-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-white mb-2"
                 />
+
+                {/* IMAGE */}
                 <input
                   type="text"
                   value={info.imageUrl}
@@ -169,13 +183,17 @@ const AddItem = () => {
                   placeholder={`Image link ${index + 1}`}
                   className="w-full p-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-white mb-2"
                 />
+
+                {/* IMAGE TITLE */}
                 <input
                   type="text"
                   value={info.imageDescription}
                   onChange={(e) => handleInfoChange(index, "imageDescription", e)}
-                  placeholder={`Description for image ${index + 1}`}
+                  placeholder={`Title for image ${index + 1}`}
                   className="w-full p-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-white mb-2"
                 />
+
+                {/* DELETE btn */}
                 <button
                   type="button"
                   onClick={() => handleRemoveInfo(index)}
@@ -185,6 +203,8 @@ const AddItem = () => {
                 </button>
               </div>
             ))}
+
+            {/* ADD ADDITIONAL INFO btn */}
             <button
               type="button"
               onClick={handleAddInfo}
@@ -194,10 +214,13 @@ const AddItem = () => {
             </button>
           </div>
 
+          {/* SAVE btn */}
           <div className="flex justify-between">
             <button type="submit" className="bg-amber-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-amber-600 transition">
               Save
             </button>
+
+            {/* CANCEL btn */}
             <button type="button" onClick={handleCancel} className="bg-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-lg hover:bg-gray-400 transition">
               Cancel
             </button>

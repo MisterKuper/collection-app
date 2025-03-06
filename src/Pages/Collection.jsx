@@ -4,6 +4,18 @@ import { collection, getDocs, doc, getDoc, query, where } from "firebase/firesto
 import { useNavigate, useParams } from "react-router-dom";
 import { assets } from '../assets/assets.js';
 
+// bg color defining
+const hexToRgba = (hex, alpha) => {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) {
+    hex = hex.split('').map((c) => c + c).join('');
+  }
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const Collection = () => {
   const { collectionId } = useParams();
   const [items, setItems] = useState([]);
@@ -37,8 +49,12 @@ const Collection = () => {
   }, [collectionId]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+    <div 
+      className="min-h-screen flex flex-col items-center p-6"
+      style={{ backgroundColor: hexToRgba(collectionColor, 0.4) }} // set bg color
+    >
       <div className="w-full max-w-5xl bg-white shadow-xl rounded-lg p-6">
+        {/* GO BACK btn */}
         <button
           className="w-15 mb-6 px-2 py-2 bg-white rounded-full hover:bg-amber-500 transition duration-300"
           onClick={() => navigate("/home")}
@@ -50,6 +66,7 @@ const Collection = () => {
           {collectionName} 
         </h2>
 
+        {/* ADD ITEM btn */}
         <div className="flex justify-center mb-6">
           <button
             className="mb-15 px-5 py-3 text-white bg-amber-500 font-semibold rounded-lg hover:bg-amber-600 transition duration-300"
@@ -58,7 +75,7 @@ const Collection = () => {
             + Add Item
           </button>
         </div>
-
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {items.length > 0 ? (
             items.map((item) => (
@@ -73,7 +90,7 @@ const Collection = () => {
                   alt={item.name}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                <h3 className="text-lg font-semibold text-center mt-3  break-words overflow-hidden">
+                <h3 className="text-lg font-semibold text-center mt-3 break-words overflow-hidden">
                   {item.name}
                 </h3>
               </div>

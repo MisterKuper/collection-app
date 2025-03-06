@@ -63,6 +63,8 @@ const AddCollection = () => {
         )}
 
         <form onSubmit={handleSubmit}>
+
+            {/* COLLECTION NAME */}
           <div className="mb-4">
             <label htmlFor="name" className="block text-lg font-medium mb-2">
               Collection Name:
@@ -77,6 +79,7 @@ const AddCollection = () => {
             />
           </div>
 
+          {/* COLLECTION COLOR */}
           <div className="mb-6">
             <label htmlFor="color" className="block text-lg font-medium mb-2">
               Color:
@@ -96,7 +99,8 @@ const AddCollection = () => {
               ))}
             </div>
           </div>
-
+          
+          {/* CREATE btn */}
           <div className="flex justify-between items-center gap-3">
             <button
               type="submit"
@@ -109,6 +113,8 @@ const AddCollection = () => {
             >
               {loading ? "Saving..." : "Create"}
             </button>
+
+            {/* CANCEL btn */}
             <button
               type="button"
               onClick={handleCancel}

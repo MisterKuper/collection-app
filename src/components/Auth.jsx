@@ -63,6 +63,7 @@ const Auth = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-semibold text-center mb-6">{isRegistering ? "Register" : "Sign In"}</h2>
 
+        {/* EMAIL */}
         <input
           type="email"
           placeholder="Email..."
@@ -70,6 +71,7 @@ const Auth = () => {
           className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         
+        {/* PASSWORD */}
         <input
           type="password"
           placeholder="Password..."
@@ -83,6 +85,7 @@ const Auth = () => {
           </div>
         )}
 
+        {/* REGISTER/SIGN IN btn */}
         {isRegistering ? (
           <button 
             onClick={register} 
@@ -99,6 +102,7 @@ const Auth = () => {
           </button>
         )}
 
+        {/* GOOGLE btn */}
         <button
           onClick={signInWithGoogle}
           className="w-full py-3 mt-4 bg-white border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-100 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500"
@@ -107,6 +111,7 @@ const Auth = () => {
           <span className="text-gray-700 font-semibold">Sign In with Google</span>
         </button>
 
+        {/* SIGN IN <---> REGISTRATION */}
         <p 
           onClick={() => setIsRegistering(!isRegistering)} 
           className="text-center text-blue-500 mt-4 cursor-pointer hover:font-semibold hover:scale-105"

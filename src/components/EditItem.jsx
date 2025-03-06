@@ -110,6 +110,8 @@ const EditItem = () => {
 
         {/* Form to update item */}
         <form onSubmit={handleSubmit}>
+
+          {/* ITEM NAME */}
           <div className="mb-4">
             <label className="block text-lg font-semibold">Name</label>
             <input
@@ -121,6 +123,7 @@ const EditItem = () => {
             />
           </div>
 
+          {/* IMAGE */}
           <div className="mb-4">
             <label className="block text-lg font-semibold">Image URL</label>
             <input
@@ -130,11 +133,12 @@ const EditItem = () => {
               className="w-full p-2 mt-2 border border-gray-300 rounded-md"
               placeholder="Image URL"
             />
-            {previewImage(imageUrl)} {/* Preview main image */}
+            {previewImage(imageUrl)} 
           </div>
 
+          {/* CONDITION TYPE */}
           <div className="mb-4">
-            <label className="block text-lg font-semibold">Category</label>
+            <label className="block text-lg font-semibold">Condition Type</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -151,6 +155,7 @@ const EditItem = () => {
             </select>
           </div>
 
+          {/* DESCRIPTION */}
           <div className="mb-4">
             <label className="block text-lg font-semibold">Description</label>
             <textarea
@@ -166,6 +171,8 @@ const EditItem = () => {
             <h3 className="text-2xl font-semibold mb-4">Additional Information</h3>
             {additionalInformation.map((info, index) => (
               <div key={index} className="mb-4 p-4 border rounded-lg border-gray-300">
+                
+                {/* TITLE */}
                 <div className="mb-4">
                   <label className="block text-lg font-semibold">Title</label>
                   <input
@@ -178,7 +185,8 @@ const EditItem = () => {
                     placeholder="Additional info title"
                   />
                 </div>
-
+                
+                {/* TEXT */}
                 <div className="mb-4">
                   <label className="block text-lg font-semibold">Text</label>
                   <textarea
@@ -191,6 +199,7 @@ const EditItem = () => {
                   />
                 </div>
 
+                {/* IMAGE */}
                 <div className="mb-4">
                   <label className="block text-lg font-semibold">Image URL</label>
                   <input
@@ -202,11 +211,12 @@ const EditItem = () => {
                     className="w-full p-2 mt-2 border border-gray-300 rounded-md"
                     placeholder="Image URL"
                   />
-                  {previewImage(info.imageUrl)} {/* Preview additional images */}
+                  {previewImage(info.imageUrl)}
                 </div>
 
+                {/* IMAGE TITLE */}
                 <div className="mb-4">
-                  <label className="block text-lg font-semibold">Image Description</label>
+                  <label className="block text-lg font-semibold">Image Title</label>
                   <input
                     type="text"
                     value={info.imageDescription}
@@ -218,6 +228,7 @@ const EditItem = () => {
                   />
                 </div>
 
+                {/* REMOVE BLOCK btn */}
                 <button
                   type="button"
                   onClick={() => handleRemoveAdditionalInfo(index)}
@@ -227,6 +238,8 @@ const EditItem = () => {
                 </button>
               </div>
             ))}
+
+            {/* ADD bLOCK btn */}
             <button
               type="button"
               onClick={handleAddAdditionalInfo}
@@ -235,7 +248,8 @@ const EditItem = () => {
               Add More Information
             </button>
           </div>
-
+          
+          {/* SAVE btn */}
           <button
             type="submit"
             className="w-full mt-10 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
@@ -244,7 +258,7 @@ const EditItem = () => {
           </button>
         </form>
 
-        {/* Cancel Button */}
+        {/* CANCEL btn */}
         <button
           onClick={handleCancel}
           className="w-full py-2 px-4 mt-4 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600"

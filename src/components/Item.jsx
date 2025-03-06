@@ -16,9 +16,22 @@ const statusStyles = {
   "Custom": "bg-blue-500 text-sky-100 font-semibold text-lg mt-4 ml-2 px-4 py-2 rounded-full",
 };
 
+// bg color defining
+const hexToRgba = (hex, alpha) => {
+  let cleanHex = hex.replace('#', '');
+  if (cleanHex.length === 3) {
+    cleanHex = cleanHex.split('').map((c) => c + c).join('');
+  }
+  const r = parseInt(cleanHex.substring(0, 2), 16);
+  const g = parseInt(cleanHex.substring(2, 4), 16);
+  const b = parseInt(cleanHex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const Item = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState(null);
+  const [collectionColor, setCollectionColor] = useState("#f3f4f6");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -28,7 +41,17 @@ const Item = () => {
         const docRef = doc(db, "items", itemId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setItem(docSnap.data());
+          const data = docSnap.data();
+          setItem(data);
+          // if data exists, inherit color
+          if (data.collectionId) {
+            const collRef = doc(db, "collections", data.collectionId);
+            const collSnap = await getDoc(collRef);
+            if (collSnap.exists()) {
+              const collData = collSnap.data();
+              setCollectionColor(collData.color || "#f3f4f6");
+            }
+          }
         } else {
           console.log("Item not found!");
         }
@@ -55,10 +78,11 @@ const Item = () => {
     }
   };
 
-  // loading screen
+  // LOADING SCREEN
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div
+        className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center">
           <div className="mb-2 text-center text-gray-700">Loading...</div>
           <div className="w-16 h-16 border-8 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -75,13 +99,14 @@ const Item = () => {
     );
   }
 
-  // customising categories
   const itemStatusText = item.conditionValue || "Custom";
   const itemStatusClass = statusStyles[itemStatusText] || statusStyles["Custom"];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6 relative">
-      
+    <div
+      className="min-h-screen flex flex-col items-center p-6 relative"
+      style={{ backgroundColor: hexToRgba(collectionColor, 0.4) }} // set bg color
+    >
       {/* GO BACK btn */}
       <button
         className="fixed top-6 left-6 p-2 bg-white rounded-full shadow-md hover:bg-amber-500 transition duration-300"
@@ -93,7 +118,7 @@ const Item = () => {
       {/* DELETE btn */}
       <button
         onClick={handleDelete}
-        className="absolute top-6 right-6 p-3 bg-white rounded-full shadow-md hover:bg-red-500 transition duration-300"
+        className="fixed top-6 right-6 p-3 bg-white rounded-full shadow-md hover:bg-red-500 transition duration-300"
       >
         <img src={assets.delete_icon} alt="Delete" className="w-8 h-8" />
       </button>
@@ -111,7 +136,7 @@ const Item = () => {
           {item.name}
         </h2>
 
-        {/* item main image and category */}
+        {/* Main image and condition type */}
         <div className="p-3 ml-6 float-right flex flex-col">
           {item.imageUrl ? (
             <div className="flex flex-col items-center">
@@ -130,13 +155,15 @@ const Item = () => {
             <div className="w-64 h-64 flex items-center justify-center bg-gray-200 rounded-lg shadow-md">
               <p className="text-gray-500">No image</p>
             </div>
-          )}          
-          <div className="mt-4 px-4 py-2 text-xl font-semibold ">
-            <p className="pt-5 border-t-1 border-gray-400">Category: <span className={`${itemStatusClass}`}>{itemStatusText}</span></p>
+          )}
+          <div className="mt-4 px-4 py-2 text-xl font-semibold">
+            <p className="pt-5 border-t border-gray-400">
+              Condition Type: <span className={`${itemStatusClass}`}>{itemStatusText}</span>
+            </p>
           </div>
         </div>
 
-        {/* descriprion */}
+        {/* Description */}
         <div className="text-gray-700">
           <p className="text-lg">
             {item.description || "Description not available."}
@@ -150,7 +177,6 @@ const Item = () => {
             Additional Information
           </h3>
 
-          {/* Additional information block */}
           {item.additionalInformation.map((info, index) => (
             <div key={index} className="border-t border-gray-200 pt-4 mt-4">
               {info.title && (
@@ -162,8 +188,6 @@ const Item = () => {
                 <p className="text-lg text-gray-700 mt-2">{info.text}</p>
               )}
               {info.imageUrl && (
-
-                // image
                 <div className="mt-4 flex flex-col items-center">
                   <img
                     src={info.imageUrl}
@@ -171,7 +195,9 @@ const Item = () => {
                     className="w-1/2 rounded-lg shadow-md"
                   />
                   {info.imageDescription && (
-                    <p className="text-gray-600 underline mt-2">{info.imageDescription}</p>
+                    <p className="text-gray-600 italic underline mt-2">
+                      {info.imageDescription}
+                    </p>
                   )}
                 </div>
               )}

@@ -120,6 +120,7 @@ const Home = () => {
     }
   };
 
+  // LOADING SCREEN
   if (loading)
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -133,6 +134,8 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8 relative">
       <div className="w-full max-w-7xl bg-white border-2 border-none rounded-lg shadow-2xl p-6">
+        
+        {/* SIGN OUT btn */}
         <button
           onClick={logout}
           className="absolute top-6 right-6 bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
@@ -140,6 +143,7 @@ const Home = () => {
           Sign Out
         </button>
 
+        {/* ADD btn */}
         <button
           onClick={() => navigate("/add-collection")}
           className="absolute bottom-12 right-6 rounded-full hover:shadow-2xl transition duration-300"
@@ -159,6 +163,8 @@ const Home = () => {
             >
               {editingCollection === col.id ? (
                 <div className="space-y-5">
+
+                  {/* COLLECTION NAME */}
                   <input
                     type="text"
                     value={newName}
@@ -167,13 +173,14 @@ const Home = () => {
                     className="w-full px-4 py-2 border border-none rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
 
+                  {/* COLLECTION COLOR */}
                   <div className="flex bg-white ml-3.5 mr-3.5 rounded-lg place-content-center gap-x-2">
                     {colorOptions.map((color) => (
                       <div
                         key={color}
                         className={`p-2.5  rounded-full cursor-pointer transition-all duration-200
-            ${newColor === color ? "ring-3 ring-white" : ""}
-            hover:scale-140`}
+                        ${newColor === color ? "ring-3 ring-white" : ""}
+                        hover:scale-140`}
                         style={{ backgroundColor: color }}
                         onClick={() => setNewColor(color)}
                       />
@@ -181,12 +188,16 @@ const Home = () => {
                   </div>
 
                   <div className="flex justify-between mt-10">
+
+                    {/* SAVE btn */}
                     <button
                       onClick={() => handleSaveChanges(col.id)}
                       className="bg-lime-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-lime-500 hover:scale-110 transition duration-300"
                     >
                       Save
                     </button>
+
+                    {/* CANCEL btn */}
                     <button
                       onClick={() => setEditingCollection(null)}
                       className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 hover:scale-110 transition duration-300"
@@ -201,6 +212,8 @@ const Home = () => {
                     {col.name}
                   </h3>
                   <div className="absolute bottom-4 right-4 flex space-x-2">
+
+                    {/* EDIT btn */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -214,7 +227,8 @@ const Home = () => {
                         className="w-6 h-6"
                       />
                     </button>
-
+                    
+                    {/* DELETE btn */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
